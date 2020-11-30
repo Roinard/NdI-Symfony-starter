@@ -1,0 +1,15 @@
+version: '3.2'
+services:
+  app:
+    build: ./
+    image: apptest:latest
+    ports:
+      - "80:80"
+      - "3306:3306"
+    volumes:
+      - type: bind
+        source: ../../.
+        target: /var/www/app
+      - type: bind
+        source: ./logs
+        target: /logs
