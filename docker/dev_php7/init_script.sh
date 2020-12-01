@@ -29,10 +29,10 @@ if [ $init_status -eq 0 ] || [ "$1" == "-r" ]; then
     touch first_init_ok && echo "ok" >> first_init_ok
 fi
 
-init_log_arpege_access_status=`file /logs/arpege_access.log | grep "text" | wc -l`
-if [ $init_log_arpege_access_status -eq 0 ]; then
-    touch /logs/arpege_access.log
+init_log_app_access_status=`file /logs/app_access.log | grep "text" | wc -l`
+if [ $init_log_app_access_status -eq 0 ]; then
+    touch /logs/app_access.log
 fi
 
 echo "Job's done ! Let's see the Apache logs :"
-tail -f /logs/arpege_access.log
+tail -f /logs/app_access.log

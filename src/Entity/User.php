@@ -1,8 +1,13 @@
 <?php
 
+namespace App\Entity;
+
 
 use Doctrine\Common\Comparable as Comparable;
+use Doctrine\ORM\Mapping as ORM;
+use Serializable;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="User")

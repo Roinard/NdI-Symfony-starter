@@ -1,36 +1,47 @@
 {% block stylesheets %}
-    <link href= "{{ assert("css/bootstrap.min.css") }}" rel="stylesheet">
+    <link href= "{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
     <!-- Font awesome CSS -->
-    <link href= "{{ assert("css/font-awesome.min.css") }}" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="{{ assert("css/style.css") }}" rel="stylesheet">
+    <link href="{{ asset("css/simple-sidebar.css")}}" rel="stylesheet">
 {% endblock %}
 {% block javascripts %}
+    <script src= "{{ asset("js/jquery.slim.js") }}"> </script>
+    <script src= "{{ asset("js/bootstrap.bundle.js") }}"> </script>
+
 
 {% endblock %}
 
 {% block body %}
-    {% include 'topMenu.html.twig' %}
+    <div class="d-flex" id="wrapper">
 
-    <div class="container-fluid">
-        <div class="row">
-            {% if app.user %}
-                {% if app.user.hasRole('actif') %}
-                    <div class="col-sm-3 col-md-2 sidebar">
-                        {% include 'leftMenu.html.twig' %}
-                    </div>
-                {% endif %}
-            {% endif %}
-            <div class="{% if app.user and app.user.hasRole('actif') %} col-sm-9 col-md-10 col-sm-offset-3 col-md-offset-2 {% endif %} main">
-                {% for flashMessage in app.session.flashbag.get('danger') %}<div class="alert alert-danger alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ flashMessage }}</div>{% endfor %}
-                {% for flashMessage in app.session.flashbag.get('warning') %}<div class="alert alert-warning alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ flashMessage }}</div>{% endfor %}
-                {% for flashMessage in app.session.flashbag.get('success') %}<div class="alert alert-success alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ flashMessage }}</div>{% endfor %}
-                {% for flashMessage in app.session.flashbag.get('info') %}<div class="alert alert-info alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ flashMessage }}</div>{% endfor %}
-                <div class="row page-header"><h1>{% block contentTitle %}{% endblock %}</h1></div>
-                <div class="row margin-top-20px">
-                    {% block content %}{% endblock %}
-                </div>
+        <!-- Sidebar -->
+        <div class="bg-secondary border-primary" id="sidebar-wrapper">
+            <div class="sidebar-heading">Start Bootstrap </div>
+            <div class="list-group list-group-flush">
+                <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+                <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
+                <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
+                <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
+                <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
+                <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
             </div>
         </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            {% include 'topMenu.html.twig' %}
+            <div class="container-fluid">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
     </div>
+
+    <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
 {% endblock %}

@@ -4,14 +4,13 @@
 namespace App\Controller;
 
 
-use App\Service\DiscordHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 class IndexController extends AbstractController
 {
     /**
-     * @Route("/", name="overview_index")
+     * @Route("/", name="index")
      */
     public function indexAction()
     {
