@@ -35,10 +35,7 @@ class User implements UserInterface, Serializable, Comparable
      * @Assert\NotBlank
      */
     protected $name;
-    /**
-     * @ORM\Column(type="string", name="fullName", length=200)
-     */
-    protected $fullName;
+
     /**
      * @ORM\Column(type="string", length=100, unique=true)
      * @Assert\NotBlank
@@ -145,21 +142,7 @@ class User implements UserInterface, Serializable, Comparable
         $this->name = $name;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getFullName()
-    {
-        return $this->fullName;
-    }
 
-    /**
-     * @param mixed $fullName
-     */
-    public function setFullName($fullName): void
-    {
-        $this->fullName = $fullName;
-    }
 
     /**
      * @return mixed

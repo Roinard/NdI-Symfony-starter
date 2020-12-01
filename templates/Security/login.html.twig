@@ -3,10 +3,31 @@
 {% block title %} App - Connexion{% endblock %}
 
 {% block content %}
-    <h3>
-        LOGIN PAGE
-    </h3>
-    <p>
-        Please make it centered
-    </p>
+    <form action="{{ path('login_check') }}" method="post" class="form-signin">
+
+            <h2 class="form-signin-heading">Connexion</h2>
+        {% if error %}
+            <div class="alert alert-danger alert-dismissable">
+                {% if error.messageKey == "Invalid credentials." %}
+                    Login ou mot de passe invalide.
+                {% else %}
+                    {{ error.messageKey|trans(error.messageData) }}
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% for flashMessage in app.session.flashbag.get('danger') %}<div class="alert alert-danger alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ flashMessage }}</div>{% endfor %}
+        {% for flashMessage in app.session.flashbag.get('warning') %}<div class="alert alert-warning alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ flashMessage }}</div>{% endfor %}
+        {% for flashMessage in app.session.flashbag.get('success') %}<div class="alert alert-success alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ flashMessage }}</div>{% endfor %}
+        {% for flashMessage in app.session.flashbag.get('info') %}<div class="alert alert-info alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ flashMessage }}</div>{% endfor %}
+
+        <label for="username" class="sr-only">Nom d'utilisateur :</label>
+        <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control" placeholder="Nom d'utilisateur" required autofocus />
+
+        <label for="password" class="sr-only">Mot de passe :</label>
+        <input type="password" id="password" name="_password"  class="form-control" placeholder="Password" required />
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
+        <a class="btn btn-xs btn-default btn-block" href="{{ path('resetpw')}}">Mot de passe oublié</a>
+    </form>
 {% endblock %}

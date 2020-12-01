@@ -1,6 +1,7 @@
 {% block stylesheets %}
     <link href= "{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
     <!-- Font awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{{ asset("css/simple-sidebar.css")}}" rel="stylesheet">
 {% endblock %}
 {% block javascripts %}
@@ -31,7 +32,16 @@
         <div id="page-content-wrapper">
             {% include 'topMenu.html.twig' %}
             <div class="container-fluid">
-                {% block content %}{% endblock %}
+                <div class="col-sm-9 col-md-10 col-sm-offset-3 col-md-offset-2 main">
+                    {% for flashMessage in app.session.flashbag.get('danger') %}<div class="alert alert-danger alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ flashMessage }}</div>{% endfor %}
+                    {% for flashMessage in app.session.flashbag.get('warning') %}<div class="alert alert-warning alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ flashMessage }}</div>{% endfor %}
+                    {% for flashMessage in app.session.flashbag.get('success') %}<div class="alert alert-success alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ flashMessage }}</div>{% endfor %}
+                    {% for flashMessage in app.session.flashbag.get('info') %}<div class="alert alert-info alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ flashMessage }}</div>{% endfor %}
+                    <div class="row page-header"><h1>{% block contentTitle %}{% endblock %}</h1></div>
+                    <div class="row margin-top-20px">
+                        {% block content %}{% endblock %}
+                    </div>
+                </div>
             </div>
         </div>
         <!-- /#page-content-wrapper -->

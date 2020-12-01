@@ -14,6 +14,13 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        return $this->render("index.html.twig");
+        return $this->render("Index/index.html.twig");
+    }
+
+    public function dashboardAction()
+    {
+        if(!$this->getUser())
+            $this->addFlash("danger", "Tu n'as pas le droit d'acceder à cette page");
+        return $this->render("Index/dashboard.html.twig");
     }
 }
