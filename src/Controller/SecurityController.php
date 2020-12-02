@@ -5,11 +5,14 @@ namespace App\Controller;
 
 
 
+use App\Entity\User;
+use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -233,6 +236,38 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * @Route("/signup", name="registration")
+     * @param Request $request
+     * @param UserPasswordEncoder $encoder
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function signupAction(Request $request, UserPasswordEncoderInterface $encoder)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $new_user = new User();
+        $new_user->setDateRegistered(new \DateTime());
+        $new_user->setDateUpdated(new \DateTime());
+
+        $form = $this->createForm(UserType::class, $new_user)
+            ->add('save', SubmitType::class, array('label' => 'Enregistrer'));
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $hash = $encoder->encodePassword($new_user, $new_user->getPassword());
+            $new_user->setPassword($hash);
+            $em->persist($new_user);
+            $em->flush();
+
+            $this->addFlash("success", "Vous vous êtes inscrits");
+
+            return $this->redirectToRoute("dashboard");
+        }
+        return $this->render("Security/signup.html.twig", ["form" => $form->createView()]);
+    }
+
+
+    /**
      * @Route("/login_check", name="login_check")
      */
     public function loginCheckAction()
@@ -240,4 +275,5 @@ class SecurityController extends AbstractController
         // this controller will not be executed,
         // as the route is handled by the Security system
     }
+
 }

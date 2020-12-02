@@ -19,4 +19,11 @@ class UserController extends AbstractController
         return $this->render("User/profile.html.twig");
     }
 
+    /**
+     * @Route("/user/edit", name="user_edit")
+     */
+    public function editAction()
+    {
+        return $this->render("User/edit.html.twig");
+    }
 }

@@ -18,8 +18,7 @@ class AppFixtures extends Fixture
         $user->setUsername("admin");
         $user->setEmail('albert.dmin@azer.com');
         $user->setPassword('$2a$08$jHZj/wJfcVKlIwr5AvR78euJxYK7Ku5kURNhNx.7.CSIJ3Pq6LEPC');
-        $user->setIsActive(true);
-
+        $user->setDateRegistered(new DateTime());
         $user->setDateUpdated(new DateTime());
         $manager->persist($user);
         $manager->flush();

@@ -17,10 +17,13 @@ class IndexController extends AbstractController
         return $this->render("Index/index.html.twig");
     }
 
+
+    /**
+     *  @Route("/dashboard", name="dashboard")
+     */
     public function dashboardAction()
     {
-        if(!$this->getUser())
-            $this->addFlash("danger", "Tu n'as pas le droit d'acceder à cette page");
+
         return $this->render("Index/dashboard.html.twig");
     }
 }

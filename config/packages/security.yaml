@@ -25,10 +25,9 @@ security:
             pattern: ^/resetpass
             security: false
         login:
-            pattern: ^/(login|signin|cvtheque/login|cvtheque/resetpass)$
+            pattern: ^/(login|signin|resetpass|signup)$
             security: false
         default:
-            pattern: ^(?!/cvtheque).*$
             form_login: ~
             provider: users
             logout:

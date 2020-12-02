@@ -58,7 +58,7 @@ class User implements UserInterface, Serializable, Comparable
      */
     protected $zipCode;
     /**
-     * @ORM\Column(type="smallint", length=1, nullable=true)
+     * @ORM\Column(name="dateRegistered", type="datetime")
      */
 
     protected $dateRegistered;
@@ -66,9 +66,7 @@ class User implements UserInterface, Serializable, Comparable
      * @ORM\Column(name="dateUpdated", type="datetime")
      */
     protected $dateUpdated;
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+
 
     /**
      * @ORM\OneToMany(targetEntity="Notification", mappedBy="user",cascade={"persist","remove"})
@@ -89,10 +87,36 @@ class User implements UserInterface, Serializable, Comparable
     private $password;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @Assert\EqualTo(propertyPath="password")
      */
-    private $isActive;
+    private $password_repeat;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $wantDarkMode;
+
+    /**
+     * @ORM\Column(type="string", length=128, nullable=true)
+     */
+    private $wantLanguage;
+
+
+    /**
+     * @return mixed
+     */
+    public function getPasswordRepeat()
+    {
+        return $this->password_repeat;
+    }
+
+    /**
+     * @param mixed $password_repeat
+     */
+    public function setPasswordRepeat($password_repeat): void
+    {
+        $this->password_repeat = $password_repeat;
+    }
 
     /**
      * @return mixed
@@ -320,21 +344,6 @@ class User implements UserInterface, Serializable, Comparable
         $this->password = $password;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getIsActive()
-    {
-        return $this->isActive;
-    }
-
-    /**
-     * @param mixed $isActive
-     */
-    public function setIsActive($isActive): void
-    {
-        $this->isActive = $isActive;
-    }
 
     public function compareTo($other)
     {
@@ -379,4 +388,39 @@ class User implements UserInterface, Serializable, Comparable
     {
 
     }
+
+    /**
+     * @return mixed
+     */
+    public function getWantDarkMode()
+    {
+        return $this->wantDarkMode;
+    }
+
+    /**
+     * @param mixed $wantDarkMode
+     */
+    public function setWantDarkMode($wantDarkMode): void
+    {
+        $this->wantDarkMode = $wantDarkMode;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWantLanguage()
+    {
+        return $this->wantLanguage;
+    }
+
+    /**
+     * @param mixed $wantLanguage
+     */
+    public function setWantLanguage($wantLanguage): void
+    {
+        $this->wantLanguage = $wantLanguage;
+    }
+
+
+
 }
